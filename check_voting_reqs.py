@@ -2,7 +2,6 @@ import pandas as pd
 import os
 from PIL import Image
 import cv2
-import pytesseract
 import easyocr
 
 # Load the CSV file with voting requirements
@@ -12,22 +11,6 @@ df = pd.read_csv(csv_path)
 # Convert DataFrame to dictionary for easy lookup by state
 requirements = df.set_index('State').to_dict(orient='index')
 
-# Function for Tesseract OCR with preprocessing
-def ocr_with_tesseract(image_path):
-    # Load and preprocess image
-    image = cv2.imread(image_path)
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    thresh = cv2.adaptiveThreshold(
-        gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, 2
-    )
-    
-    # OCR with Tesseract
-    pil_image = Image.fromarray(thresh)
-    text = pytesseract.image_to_string(pil_image)
-    
-    print("Tesseract OCR Output:")
-    print(text)
-    return text
 
 # Function for EasyOCR
 def ocr_with_easyocr(image_path):
@@ -42,8 +25,6 @@ def ocr_with_easyocr(image_path):
 
 # Main OCR function to test multiple models
 def perform_text_recognition(image_path, model_path=None):
-    print("Attempting OCR with Tesseract...")
-    tesseract_result = ocr_with_tesseract(image_path)
     
     print("\nAttempting OCR with EasyOCR...")
     easyocr_result = ocr_with_easyocr(image_path)
@@ -51,7 +32,6 @@ def perform_text_recognition(image_path, model_path=None):
 
     # Return the results from all methods
     return {
-        "Tesseract": tesseract_result,
         "EasyOCR": easyocr_result,
     }
 
