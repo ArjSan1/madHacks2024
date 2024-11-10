@@ -3,14 +3,15 @@ from dotenv import load_dotenv
 import requests, os
 
 load_dotenv()
-IPINFO_APIKEY = os.getenv("IPINFO_APIKEY") # https://ipinfo.io/products/ip-geolocation-api
+IPINFO_APIKEY = "7f59b74b30cb6c" #os.getenv("IPINFO_APIKEY") # https://ipinfo.io/products/ip-geolocation-api
 
 app = Flask(__name__)
 
 @app.route("/getstate", methods=["GET"])
 def get_state():
     try:
-        user_ip = request.remote_addr
+        #user_ip = request.remote_addr
+        user_ip = "8.8.8.8" # for testing purposes, replace with user_ip = request.remote_addr
         url = f"https://ipinfo.io/{user_ip}?token={IPINFO_APIKEY}"
         
         response = requests.get(url)
