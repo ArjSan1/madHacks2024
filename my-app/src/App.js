@@ -1,9 +1,13 @@
 import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import './styles/App.css'
+import { Routes, Route, useNavigate } from 'react-router-dom';
+import './styles/App.css';
+import Vote from './Vote';
 
 function App() {
   const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
+  const navigate = useNavigate();
+  const goToVote = () => navigate('/Vote');
 
   return (
     <div className="App">
@@ -11,8 +15,7 @@ function App() {
 
       {isAuthenticated ? (
         <div>
-          {/* change to go to voting page */}
-          <button className="star-button" onClick={() => logout({ returnTo: window.location.origin })}>
+          <button className="star-button" onClick={goToVote}>
             Get Started
           </button>
           <button id="logout-button" onClick={() => logout({ returnTo: window.location.origin })}>
@@ -22,6 +25,9 @@ function App() {
       ) : (
         <button className="star-button" onClick={() => loginWithRedirect()}>Log In</button>
       )}
+      <Routes>
+        <Route path="/Vote" element={<Vote />} />
+      </Routes>
     </div>
   );
 }

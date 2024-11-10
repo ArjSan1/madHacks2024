@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  position: relative;
+  height: 100vh;
 }
 
 .App-logo {
@@ -35,6 +37,7 @@ body {
   background-image: url('capitol.jpg');
   background-size: cover;
   background-position: center;
+  margin: 0;
 }
 
 h1 {
