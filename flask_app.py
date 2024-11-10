@@ -3,9 +3,13 @@ from dotenv import load_dotenv
 import requests, os
 
 load_dotenv()
-IPINFO_APIKEY = "7f59b74b30cb6c" #os.getenv("IPINFO_APIKEY") # https://ipinfo.io/products/ip-geolocation-api
+IPINFO_APIKEY =  os.getenv("IPINFO_APIKEY") # https://ipinfo.io/products/ip-geolocation-api
 
 app = Flask(__name__)
+
+@app.route("/", methods=["GET"])
+def home():
+    return "Welcome to the home page!"
 
 @app.route("/getstate", methods=["GET"])
 def get_state():
